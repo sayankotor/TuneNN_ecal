@@ -40,7 +40,7 @@ def make_nn2(seed_, part='All', ecal_units=800, ps_units = 50, drop_ = 0, drop_p
     dense_1_ps = lasagne.layers.DenseLayer(input_layer_preshower,num_units=ps_units,
                                nonlinearity = lasagne.nonlinearities.tanh,
                                name = "hidden_dense_layer preshower")
-    #drop_out_ps = lasagne.layers.dropout(dense_1_ps, p=drop_ps)
+    drop_out_ps = lasagne.layers.dropout(dense_1_ps, p=drop_ps)
     dense_2_ps = lasagne.layers.DenseLayer(drop_out_ps,num_units=ps_units,
                                nonlinearity = lasagne.nonlinearities.tanh,
                                name = "hidden_dense_layer preshower")
@@ -78,7 +78,7 @@ def make_nn2(seed_, part='All', ecal_units=800, ps_units = 50, drop_ = 0, drop_p
 
 
     accuracy = lasagne.objectives.categorical_accuracy(y_predicted,target_y).mean()
-    updates_sgd = lasagne.updates.adagrad(loss, all_weights, learning_rate=0.05)
+    updates_sgd = lasagne.updates.adagrad(loss, all_weights)
     train_fun1 = theano.function([input_X,target_y],[loss,accuracy,y_predicted],updates= updates_sgd, allow_input_downcast=True)
     accuracy_fun1 = theano.function([input_X,target_y],accuracy)
     predict_fun = theano.function([input_X],y_predicted)
@@ -109,7 +109,7 @@ def make_nn1(seed_, part='All', ecal_units=800, ps_units = 50, drop_ = 0, drop_p
     dense_1_ps = lasagne.layers.DenseLayer(input_layer_preshower,num_units=ps_units,
                                nonlinearity = lasagne.nonlinearities.tanh,
                                name = "hidden_dense_layer preshower")
-    #drop_out_ps = lasagne.layers.dropout(dense_1_ps, p=drop_ps)
+    drop_out_ps = lasagne.layers.dropout(dense_1_ps, p=drop_ps)
 
 
     dense_1 = lasagne.layers.ConcatLayer([dense_1_calo,dense_1_ps],name='concatenated dense layers')
@@ -144,7 +144,7 @@ def make_nn1(seed_, part='All', ecal_units=800, ps_units = 50, drop_ = 0, drop_p
 
 
     accuracy = lasagne.objectives.categorical_accuracy(y_predicted,target_y).mean()
-    updates_sgd = lasagne.updates.adagrad(loss, all_weights, learning_rate=0.05)
+    updates_sgd = lasagne.updates.adagrad(loss, all_weights,learning_rate=0.05)
     train_fun1 = theano.function([input_X,target_y],[loss,accuracy,y_predicted],updates= updates_sgd, allow_input_downcast=True)
     accuracy_fun1 = theano.function([input_X,target_y],accuracy)
     predict_fun = theano.function([input_X],y_predicted)
@@ -215,7 +215,7 @@ def make_nn_250_10(seed_, part='All', drop_ = 0, drop_ps = 0):
 
 
     accuracy = lasagne.objectives.categorical_accuracy(y_predicted,target_y).mean()
-    updates_sgd = lasagne.updates.adagrad(loss, all_weights)
+    updates_sgd = lasagne.updates.adagrad(loss, all_weights,learning_rate=0.05)
     train_fun1 = theano.function([input_X,target_y],[loss,accuracy,y_predicted],updates= updates_sgd, allow_input_downcast=True)
     accuracy_fun1 = theano.function([input_X,target_y],accuracy)
     predict_fun = theano.function([input_X],y_predicted)
@@ -298,7 +298,7 @@ def make_nn3(seed_, part='All', ecal_units=300, ps_units = 50, drop_ = 0.3, drop
 
 
     accuracy = lasagne.objectives.categorical_accuracy(y_predicted,target_y).mean()
-    updates_sgd = lasagne.updates.adagrad(loss, all_weights, learning_rate=0.05)
+    updates_sgd = lasagne.updates.adagrad(loss, all_weights,learning_rate=0.05)
     train_fun1 = theano.function([input_X,target_y],[loss,accuracy,y_predicted],updates= updates_sgd, allow_input_downcast=True)
     accuracy_fun1 = theano.function([input_X,target_y],accuracy)
     predict_fun = theano.function([input_X],y_predicted)
@@ -337,7 +337,7 @@ def make_nn4(seed_, part='All', ecal_units=300, ps_units = 50, drop_ = 0.3, drop
     dense_1_ps = lasagne.layers.DenseLayer(input_layer_preshower,num_units=ps_units,
                                nonlinearity = lasagne.nonlinearities.tanh,
                                name = "hidden_dense_layer preshower")
-    #drop_out_ps = lasagne.layers.dropout(dense_1_ps, p=drop_ps)
+    drop_out_ps = lasagne.layers.dropout(dense_1_ps, p=drop_ps)
     dense_2_ps = lasagne.layers.DenseLayer(dense_1_ps,num_units=ps_units,
                                nonlinearity = lasagne.nonlinearities.tanh,
                                name = "hidden_dense_layer preshower")
